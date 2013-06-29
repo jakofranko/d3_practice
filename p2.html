@@ -4,12 +4,12 @@
 
 .node circle {
   fill: #fff;
-  stroke: steelblue;
+  stroke: red;
   stroke-width: 1.5px;
 }
 
 .node {
-  font: 10px sans-serif;
+  font: 14px sans-serif;
 }
 
 .link {
@@ -22,9 +22,19 @@
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
-
-var width = 960,
-    height = 2200;
+var root = {
+  "name" : "Blogs and stuff",
+  "children" : [
+    { "name" : "Emerging Media",
+    "children" : [
+      {"name" : "Digital Textuality"},
+      {"name" : "Alternative class"}
+    ]
+   }
+  ]
+}
+var width = 1960,
+    height = 200;
 
 var cluster = d3.layout.cluster()
     .size([height, width - 160]);
@@ -36,9 +46,8 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
   .append("g")
-    .attr("transform", "translate(40,0)");
+    .attr("transform", "translate(150,0)");
 
-d3.json("classes.json", function(error, root) {
   var nodes = cluster.nodes(root),
       links = cluster.links(nodes);
 
@@ -62,7 +71,7 @@ d3.json("classes.json", function(error, root) {
       .attr("dy", 3)
       .style("text-anchor", function(d) { return d.children ? "end" : "start"; })
       .text(function(d) { return d.name; });
-});
+
 
 d3.select(self.frameElement).style("height", height + "px");
 
